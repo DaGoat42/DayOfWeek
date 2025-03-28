@@ -87,46 +87,58 @@ Original file line number	Diff line number	Diff line change
         <p id="result"></p>
     </div>
     <script>
-        function calculateDay() {
-            let day = parseInt(document.getElementById("day").value);
-            let monthInput = document.getElementById("month").value.trim().toLowerCase();
-            let year = parseInt(document.getElementById("year").value);
-            // Map of month names to month number (also accepts numeric month inputs)
-            const months = {
-                "1": 0, "jan": 0, "january": 0,
-                "2": 1, "feb": 1, "february": 1,
-                "3": 2, "mar": 2, "march": 2,
-                "4": 3, "apr": 3, "april": 3,
-                "5": 4, "may": 4,
-                "6": 5, "jun": 5, "june": 5,
-                "7": 6, "jul": 6, "july": 6,
-                "8": 7, "aug": 7, "august": 7,
-                "9": 8, "sep": 8, "september": 8,
-                "10": 9, "oct": 9, "october": 9,
-                "11": 10, "nov": 10, "november": 10,
-                "12": 11, "dec": 11, "december": 11
-            };
-            // Check if the month is valid
-            if (!(monthInput in months)) {
-                document.getElementById("result").innerText = "Please enter a valid month!";
-                return;
-            }
-            // Convert the month input to the correct month index (zero-indexed)
-            let month = months[monthInput];
-            if (!day || !month || !year) {
-                document.getElementById("result").innerText = "Please enter a valid date!";
-                return;
-            }
-            let date = new Date(year, month, day); // Month is zero-indexed
-            let dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
-            let resultElement = document.getElementById("result");
-            // Highlight weekends (Saturday & Sunday)
-            if (dayName === "Saturday" || dayName === "Sunday") {
-                resultElement.innerHTML = `The day of the week is: <span class="weekend">${dayName} (Weekend!)</span>`;
-            } else {
-                resultElement.innerHTML = `The day of the week is: ${dayName}`;
-            }
-        }
-    </script>
+     function calculateDay() {
+         let day = parseInt(document.getElementById("day").value);
+         let monthInput = document.getElementById("month").value.trim();
+         let year = parseInt(document.getElementById("year").value);
+ 
+         // Make monthInput lowercase if it is text
+         if (isNaN(monthInput)) {
+             monthInput = monthInput.toLowerCase();
+         }
+ 
+         // Map of month names to month number (also accepts numeric month inputs)
+         const months = {
+             "1": 0, "jan": 0, "january": 0,
+             "2": 1, "feb": 1, "february": 1,
+             "3": 2, "mar": 2, "march": 2,
+             "4": 3, "apr": 3, "april": 3,
+             "5": 4, "may": 4,
+             "6": 5, "jun": 5, "june": 5,
+             "7": 6, "jul": 6, "july": 6,
+             "8": 7, "aug": 7, "august": 7,
+             "9": 8, "sep": 8, "september": 8,
+             "10": 9, "oct": 9, "october": 9,
+             "11": 10, "nov": 10, "november": 10,
+             "12": 11, "dec": 11, "december": 11
+         };
+ 
+         // Check if the month is valid
+         if (!(monthInput in months)) {
+             document.getElementById("result").innerText = "Please enter a valid month!";
+             return;
+         }
+ 
+         // Convert the month input to the correct month index (zero-indexed)
+         let month = months[monthInput];
+ 
+         if (!day || !year || isNaN(day) || isNaN(year)) {
+             document.getElementById("result").innerText = "Please enter a valid date!";
+             return;
+         }
+ 
+         let date = new Date(year, month, day); // Month is zero-indexed
+         let dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+ 
+         let resultElement = document.getElementById("result");
+ 
+         // Highlight weekends (Saturday & Sunday)
+         if (dayName === "Saturday" || dayName === "Sunday") {
+             resultElement.innerHTML = `The day of the week is: <span class="weekend">${dayName} (Weekend!)</span>`;
+         } else {
+             resultElement.innerHTML = `The day of the week is: ${dayName}`;
+         }
+     }
+ </script>
 </body>
 </html>
